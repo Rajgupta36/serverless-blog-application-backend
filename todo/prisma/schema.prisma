@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNDdlNzA3YmUtNjQwNi00NDE1LTk5MjgtM2Q4MjZjNTNlOTQ0IiwidGVuYW50X2lkIjoiNzdiMmVmNjFlMWQxNDJjMGQzZjhlOTdjZjlkZjlkNmU0NTA5NjQwYmQ5OGNhNjQ2NGRmYTViOWJkOTU4ZWZkYiIsImludGVybmFsX3NlY3JldCI6ImEwZjZkMmIyLTM5MGMtNDExZi04NzZiLWI1OWZhYTY5ZDVjYyJ9.0F-nMD5OcYwD_h9sFxwSmFd7P0WQEarVwtn0Z5Tmk4s"
+  directUrl = "postgres://avnadmin:AVNS_Uu2PhC_vilYaM56zxQ7@blog-app-raj96yt-e054.a.aivencloud.com:26333/defaultdb?sslmode=require"
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  email    String @unique
+  posts    post[]
+}
+
+model post {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  thumbnailUrl String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Author       String
+  userId       Int
+  user         user     @relation(fields: [userId], references: [id])
+}
